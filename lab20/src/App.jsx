@@ -4,34 +4,27 @@ import TodoList from './components/TodoList';
 import TodoForm from './components/TodoForm';
 
 function App() {
-  const todos = () => {
-    []   
-  };
-  const filter = (all) => {
-
-  };
+  const [todos, setTodos] = useState([])
+  const [filter, setFilter] = useState("all")
   const addTodo = (text) => {
     const newTodo = {
-      id: Date.now(), // Простой способ генерации уникального ID
+      id: Date.now(), 
       text: text,
       completed: false
     };
     setTodos([...todos, newTodo]);
   };
 
-  // Функция для переключения статуса задачи
   const toggleTodo = (id) => {
     setTodos(todos.map(todo =>
       todo.id === id ? { ...todo, completed: !todo.completed } : todo
     ));
   };
 
-  // Функция для удаления задачи
   const deleteTodo = (id) => {
     setTodos(todos.filter(todo => todo.id !== id));
   };
 
-  // Фильтрация задач в зависимости от выбранного фильтра
   const getFilteredTodos = () => {
     if (filter === 'active') {
       return todos.filter(todo => !todo.completed);
@@ -39,7 +32,7 @@ function App() {
     if (filter === 'completed') {
       return todos.filter(todo => todo.completed);
     }
-    return todos; // 'all'
+    return todos; 
   };
   return (
     <div className="app-container">

@@ -1,10 +1,18 @@
 import { useState } from 'react';
-function TodoForm({ onAdd }){
-    
-    const handleSubmit = (e) => {
+function TodoForm({ onAdd }) {
+  const [inputValue, setInputValue] = useState("")
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-    };
-    return (
+    if (inputValue.trim() == ''){
+      return;
+    }
+    onAdd(inputValue)
+    setInputValue("");
+  };
+
+  return (
     <form className="todo-form" onSubmit={handleSubmit}>
       <input
         type="text"
@@ -19,4 +27,5 @@ function TodoForm({ onAdd }){
     </form>
   );
 }
+
 export default TodoForm;

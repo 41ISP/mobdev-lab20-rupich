@@ -1,14 +1,37 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import FilterButtons from './components/FilterButtons';
 import TodoList from './components/TodoList';
 import TodoForm from './components/TodoForm';
+import { getObject, setObject } from './utils/storage';
 
 function App() {
   const [todos, setTodos] = useState([])
   const [filter, setFilter] = useState("all")
+
+  useEffect(() => {
+    const loadData = async () => {
+      const todos = await getObject("todos")
+      setTodos(todos || [])
+    };
+
+    loadData();
+  }, []);
+
+  useEffect(() => {
+    setObject("todos", todos)
+  }, [todos])
+
+  useEffect(() => {
+
+    const saveData = async () => {
+      
+    };
+    saveData();
+  }, [todos]);
+
   const addTodo = (text) => {
     const newTodo = {
-      id: Date.now(), 
+      id: Date.now(),
       text: text,
       completed: false
     };
@@ -32,7 +55,7 @@ function App() {
     if (filter === 'completed') {
       return todos.filter(todo => todo.completed);
     }
-    return todos; 
+    return todos;
   };
   return (
     <div className="app-container">
